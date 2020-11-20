@@ -25,18 +25,13 @@ class ConvertString extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $resultArray = str_split($input->getArgument('string'));
+        $optionValue = $input->getOption('first');
         $result = "";
 
-        $optionValue = $input->getOption('first');
-
-        if ($optionValue === false) {
-            foreach($resultArray as $key => $item) {
-                $result .= $key % 2 ? strtoupper($item) : strtolower($item);
-            }
-        } else {
-            foreach($resultArray as $key => $item) {
-                $result .= $key % 2 ? strtolower($item) : strtoupper($item);
-            }
+        foreach($resultArray as $key => $item) {
+            $result .= $optionValue === false
+                ? ($key % 2 ? strtoupper($item) : strtolower($item))
+                : ($key % 2 ? strtolower($item) : strtoupper($item));
         }
 
         $output->writeln($result);
@@ -44,4 +39,3 @@ class ConvertString extends Command
         return Command::SUCCESS;
     }
 }
-
