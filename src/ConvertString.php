@@ -25,13 +25,11 @@ class ConvertString extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $resultArray = str_split($input->getArgument('string'));
-        $optionValue = $input->getOption('first');
+        $optionValue = $input->getOption('first') === false ? false : true;
         $result = "";
 
         foreach($resultArray as $key => $item) {
-            $result .= $optionValue === false
-                ? ($key % 2 ? strtoupper($item) : strtolower($item))
-                : ($key % 2 ? strtolower($item) : strtoupper($item));
+            $result .= $key % 2 == $optionValue ? strtoupper($item) : strtolower($item);
         }
 
         $output->writeln($result);
